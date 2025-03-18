@@ -1,0 +1,20 @@
+{
+  "profiles": {
+    "KK.TransactionService": {
+      "commandName": "Project",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "http://localhost:8080"
+    },
+    "Container": {
+      "commandName": "Docker",
+      "launchBrowser": false,
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "http://+:8080"
+      },
+      "useSSL": false
+    }
+  }
+}

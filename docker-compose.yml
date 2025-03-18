@@ -1,0 +1,120 @@
+﻿services:
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    container_name: rabbitmq
+    restart: always
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
+    healthcheck:
+      test: ["CMD", "rabbitmqctl", "status"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network 
+
+  mssql:
+    image: "mcr.microsoft.com/mssql/server:2017-latest"
+    container_name: mssql
+    restart: always
+    ports:
+      - "1433:1433"
+    environment:
+      MSSQL_SA_PASSWORD: "YourStrong!Password"
+      ACCEPT_EULA: "Y"
+      MSSQL_TLS_ENABLED: "false"
+    healthcheck:
+      test: ["CMD-SHELL", "pidof sqlservr || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    volumes:
+      - mssql_data:/var/opt/mssql
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql 
+    networks:
+      - app_network 
+
+  walletservice:
+    build:
+      context: .
+      dockerfile: KK.WalletService/Dockerfile
+    container_name: walletservice
+    restart: always
+    ports:
+      - "8080:8080"  # Mapovanie portov (host:container)
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      mssql:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=mssql;Database=WalletDb;User Id=sa;Password=YourStrong!Password;
+      - ASPNETCORE_URLS=http://+:8080  # Umožní aplikácii počúvať na všetkých adresách
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/health || exit 1"] 
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network 
+
+  transactionservice:
+    build:
+      context: .
+      dockerfile: KK.TransactionService/Dockerfile
+    container_name: transactionservice
+    restart: always
+    ports:
+      - "5002:8080"
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
+      walletservice:
+        condition: service_healthy
+      mssql:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=mssql;Database=TransactionDb;User Id=sa;Password=YourStrong!Password;
+      - ASPNETCORE_URLS=http://+:8080
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://localhost:8080/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network 
+
+  playerwalletapi:
+    build:
+      context: .
+      dockerfile: KK.PlayerWalletApi/Dockerfile
+    container_name: playerwalletapi
+    restart: always
+    ports:
+      - "5003:5003"
+    depends_on:
+      transactionservice:
+        condition: service_healthy
+    environment:
+      - ConnectionStrings__DefaultConnection=Server=mssql;Database=PlayerWalletDb;User Id=sa;Password=YourStrong!Password;
+      - ASPNETCORE_URLS=http://+:5003
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5003/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - app_network 
+
+networks:
+  app_network :
+    driver: bridge
+
+volumes:
+  mssql_data:
+    external: false

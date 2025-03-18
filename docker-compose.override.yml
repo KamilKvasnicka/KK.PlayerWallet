@@ -1,0 +1,35 @@
+services:
+  walletservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
+      - DOTNET_RUNNING_IN_CONTAINER=true
+      - DOTNET_DEV=true
+
+  transactionservice:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
+      - DOTNET_RUNNING_IN_CONTAINER=true
+      - DOTNET_DEV=true
+
+  playerwalletapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DOTNET_USE_POLLING_FILE_WATCHER=1
+      - DOTNET_HOSTBUILDER__RELOADCONFIGONCHANGE=false
+      - DOTNET_RUNNING_IN_CONTAINER=true
+      - DOTNET_DEV=true
+
+  mssql:
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=YourStrong!Password
+      - MSSQL_PID=Developer
+
+  rabbitmq:
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest

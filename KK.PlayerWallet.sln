@@ -1,0 +1,57 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35828.75
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KK.WalletService", "KK.WalletService\KK.WalletService.csproj", "{07F554D3-3E00-4A60-BB27-B20F5393A1AF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KK.TransactionService", "KK.TransactionService\KK.TransactionService.csproj", "{B345EB35-C84B-4A1F-92F7-FF62188D1708}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KK.PlayerWalletApi", "KK.PlayerWalletApi\KK.PlayerWalletApi.csproj", "{E3131F4F-E495-4B47-BFCE-E9AF3EC5B4E1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8EC462FD-D22E-90A8-E5CE-7E832BA40C5D}"
+	ProjectSection(SolutionItems) = preProject
+		docker-compose.override.yml = docker-compose.override.yml
+		docker-compose.yml = docker-compose.yml
+		init.sql = init.sql
+		..\..\..\Downloads\README.md = ..\..\..\Downloads\README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KK.Common", "KK.Common\KK.Common.csproj", "{22B51576-3AB7-4BA8-8C15-92E9DC152C56}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KK.PlayerWallet.UnitTests", "KK.PlayerWallet.UnitTests\KK.PlayerWallet.UnitTests.csproj", "{CA3C9A12-34AA-4A10-9735-9739697C9BEC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{07F554D3-3E00-4A60-BB27-B20F5393A1AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{07F554D3-3E00-4A60-BB27-B20F5393A1AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{07F554D3-3E00-4A60-BB27-B20F5393A1AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{07F554D3-3E00-4A60-BB27-B20F5393A1AF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B345EB35-C84B-4A1F-92F7-FF62188D1708}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B345EB35-C84B-4A1F-92F7-FF62188D1708}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B345EB35-C84B-4A1F-92F7-FF62188D1708}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B345EB35-C84B-4A1F-92F7-FF62188D1708}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E3131F4F-E495-4B47-BFCE-E9AF3EC5B4E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E3131F4F-E495-4B47-BFCE-E9AF3EC5B4E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E3131F4F-E495-4B47-BFCE-E9AF3EC5B4E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E3131F4F-E495-4B47-BFCE-E9AF3EC5B4E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{22B51576-3AB7-4BA8-8C15-92E9DC152C56}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{22B51576-3AB7-4BA8-8C15-92E9DC152C56}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{22B51576-3AB7-4BA8-8C15-92E9DC152C56}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{22B51576-3AB7-4BA8-8C15-92E9DC152C56}.Release|Any CPU.Build.0 = Release|Any CPU
+		{CA3C9A12-34AA-4A10-9735-9739697C9BEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA3C9A12-34AA-4A10-9735-9739697C9BEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA3C9A12-34AA-4A10-9735-9739697C9BEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA3C9A12-34AA-4A10-9735-9739697C9BEC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {39453057-6482-4637-AF77-5914E1ED5E6E}
+	EndGlobalSection
+EndGlobal
