@@ -27,5 +27,10 @@ public static class TransactionStatus
     /// The transaction failed because the player's wallet was not found.
     /// </summary>
     public const int WalletNotFound = 4;
+
+    /// <summary>
+    /// Concurrency conflict in database.
+    /// </summary>
+    public const int ConcurrencyConflict = 5;
 }
 

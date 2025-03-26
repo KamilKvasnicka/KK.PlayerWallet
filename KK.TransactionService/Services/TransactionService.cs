@@ -100,8 +100,6 @@ namespace KK.TransactionService.Services
                             Type = request.Type
                         };
                     }
-
-                   
                   
                     // Validate sufficient balance for withdrawal or stake transactions
                     if (request.Type != TransactionType.Freespin)
@@ -138,17 +136,36 @@ namespace KK.TransactionService.Services
                     };
 
                     await _transactionRepository.AddTransactionAsync(transactionRecord);
-                    await _dbContext.SaveChangesAsync();
+
+                    try
+                    {
+                        await _dbContext.SaveChangesAsync();
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        _logger.LogWarning("Concurrency conflict while updating Wallet for Player {PlayerId}", request.PlayerId);
+                        await transaction.RollbackAsync();
+                        return new TransactionResponse
+                        {
+                            IsSucces = false,
+                            StatusCode = TransactionStatus.ConcurrencyConflict,
+                            PlayerId = request.PlayerId,
+                            TxRemoteId = request.TxRemoteId,
+                            Amount = request.Amount,
+                            Type = request.Type
+                        };
+                    }
 
                     _logger.LogInformation("Transaction successful: Player {PlayerId} {Type} {Amount}. New balance: {Balance}",
                                            request.PlayerId, request.Type, request.Amount, wallet.Balance);
+
+                    await transaction.CommitAsync();
 
                     // Publish transaction event
                     var walletUpdateEvent = new WalletUpdateEvent(request.PlayerId, request.TxRemoteId, request.Amount);
                     await _messageBus.PublishAsync("wallet_updates", walletUpdateEvent);
                     _logger.LogInformation("Event published: Wallet update for Player {PlayerId}, Amount: {Amount}", request.PlayerId, request.Amount);
-
-                    await transaction.CommitAsync();
+                    
                     return new TransactionResponse
                     {
                         IsSucces = true,

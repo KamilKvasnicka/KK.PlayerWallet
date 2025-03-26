@@ -17,6 +17,12 @@ BEGIN
 END;
 GO
 
+IF COL_LENGTH('Wallets', 'RowVersion') IS NULL
+BEGIN
+    ALTER TABLE Wallets ADD RowVersion ROWVERSION NOT NULL;
+END;
+GO
+
 IF NOT EXISTS (SELECT * FROM sys.tables WHERE name = 'Transactions')
 BEGIN
     CREATE TABLE Transactions (

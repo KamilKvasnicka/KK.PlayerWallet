@@ -22,5 +22,8 @@ namespace KK.Common.Models
         /// The date and time when the wallet was created (UTC).
         /// </summary>
         public DateTime CreatedAt { get; set; }
+
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
     }
 }
